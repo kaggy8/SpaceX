@@ -14,6 +14,7 @@
 		54C650FB2885E893009BBB0A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 54C650FA2885E893009BBB0A /* Assets.xcassets */; };
 		54C650FE2885E893009BBB0A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 54C650FC2885E893009BBB0A /* LaunchScreen.storyboard */; };
 		54C651122885F363009BBB0A /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54C651112885F363009BBB0A /* MainViewController.swift */; };
+		54C8DEEB288C741E00835E57 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54C8DEEA288C741E00835E57 /* NetworkManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		54C650FD2885E893009BBB0A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		54C650FF2885E893009BBB0A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		54C651112885F363009BBB0A /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		54C8DEEA288C741E00835E57 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -42,6 +44,7 @@
 		54B0CEE2288899F500322202 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				54C8DEEA288C741E00835E57 /* NetworkManager.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -191,6 +194,7 @@
 			files = (
 				54C651122885F363009BBB0A /* MainViewController.swift in Sources */,
 				54C650F22885E892009BBB0A /* AppDelegate.swift in Sources */,
+				54C8DEEB288C741E00835E57 /* NetworkManager.swift in Sources */,
 				54C650F42885E892009BBB0A /* SceneDelegate.swift in Sources */,
 				5427FD76288B460300FB4650 /* Rocket.swift in Sources */,
 			);

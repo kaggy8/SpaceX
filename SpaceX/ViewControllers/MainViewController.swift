@@ -11,26 +11,15 @@ class MainViewController: UIViewController {
 
     @IBOutlet weak var mainScrollView: UIScrollView!
     
+    private var networkManager = NetworkManager()
+    private var rockets: [Rocket] = []
     override func viewDidLoad() {
         super.viewDidLoad()
 
         mainScrollView.contentInsetAdjustmentBehavior = .never
-        guard let url = URL(string: "https://api.spacexdata.com/v4/rockets") else { return }
-        
-        URLSession.shared.dataTask(with: url) { data, _, error in
-            guard let data = data else {
-                print(error?.localizedDescription ?? "no error description")
-                print(data as Any)
-                return
-            }
-            
-            do {
-                let json = try JSONDecoder().decode([Rocket].self, from: data)
-                print(json)
-            } catch let error {
-                print(error)
-            }
-        }.resume()
+        networkManager.getData { result in
+            self.rockets = result
+        }
     }
     
 
