@@ -8,7 +8,7 @@
 import Foundation
 
 class NetworkManager {
-    let urlSession = URLSession.shared
+    private let urlSession = URLSession.shared
     
     func getData(completion: @escaping ([Rocket]) -> Void) {
         guard let baseUrl = URL(string: "https://api.spacexdata.com/v4/rockets") else { return }
@@ -21,11 +21,10 @@ class NetworkManager {
             
             do {
                 let result = try JSONDecoder().decode([Rocket].self, from: data)
-                print(result)
+                
                 DispatchQueue.main.async {
                     completion(result)
                 }
-                
             } catch let error {
                 print(error.localizedDescription)
             }

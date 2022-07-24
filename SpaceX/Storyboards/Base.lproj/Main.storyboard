@@ -148,19 +148,19 @@
                                                 <rect key="frame" x="229.66666666666663" y="245.33333333333337" width="128.33333333333337" height="104"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="7 февраля, 2018" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ja4-qb-4eR">
-                                                        <rect key="frame" x="0.0" y="0.0" width="128.33333333333334" height="31.333333333333332"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="128.33333333333334" height="24"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="США" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eXw-Di-23i">
-                                                        <rect key="frame" x="89" y="47.333333333333314" width="39.333333333333343" height="20.333333333333329"/>
+                                                        <rect key="frame" x="89" y="39.999999999999943" width="39.333333333333343" height="24"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$90 млн" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sek-Vi-QdN">
-                                                        <rect key="frame" x="61.333333333333343" y="83.666666666666686" width="67" height="20.333333333333329"/>
+                                                        <rect key="frame" x="61.333333333333343" y="79.999999999999943" width="67" height="24"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
@@ -363,12 +363,15 @@
                                             <constraint firstItem="Yls-hn-2qZ" firstAttribute="leading" secondItem="8yp-Zw-YiE" secondAttribute="trailing" constant="8" id="gHe-xM-mH1"/>
                                             <constraint firstItem="sZp-fo-AzF" firstAttribute="top" secondItem="DND-E8-tIc" secondAttribute="top" id="jri-Tj-PUc"/>
                                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="ufC-ap-RN9" secondAttribute="trailing" constant="20" symbolic="YES" id="kRN-bx-5Hn"/>
+                                            <constraint firstItem="ja4-qb-4eR" firstAttribute="centerY" secondItem="uK3-AO-jSY" secondAttribute="centerY" id="lhG-uh-mgK"/>
                                             <constraint firstItem="Uq7-j2-syC" firstAttribute="leading" secondItem="zgL-8Z-bFy" secondAttribute="leading" id="lur-fK-DS5"/>
                                             <constraint firstItem="B3K-MA-6qy" firstAttribute="top" secondItem="aqN-Oo-EL1" secondAttribute="bottom" constant="16" id="mks-tU-iy0"/>
                                             <constraint firstAttribute="trailing" secondItem="aqN-Oo-EL1" secondAttribute="trailing" constant="35" id="omv-Eq-bRQ"/>
+                                            <constraint firstItem="sek-Vi-QdN" firstAttribute="centerY" secondItem="BKz-Vr-LDX" secondAttribute="centerY" id="pSn-5O-5Zx"/>
                                             <constraint firstItem="f6h-RN-JHX" firstAttribute="top" secondItem="Uq7-j2-syC" secondAttribute="bottom" constant="40" id="sDb-Sy-lqJ"/>
                                             <constraint firstItem="8yp-Zw-YiE" firstAttribute="bottom" secondItem="Uq7-j2-syC" secondAttribute="bottom" id="teH-t2-jnX"/>
                                             <constraint firstItem="aqN-Oo-EL1" firstAttribute="top" secondItem="8pW-CM-otn" secondAttribute="top" id="wyC-FZ-XrR"/>
+                                            <constraint firstItem="eXw-Di-23i" firstAttribute="centerY" secondItem="cfp-6O-THf" secondAttribute="centerY" id="x0J-tb-QIX"/>
                                             <constraint firstItem="w2y-13-DBG" firstAttribute="top" secondItem="ufC-ap-RN9" secondAttribute="bottom" constant="16" id="zdL-QC-1KD"/>
                                         </constraints>
                                     </view>
@@ -400,7 +403,11 @@
                     <navigationItem key="navigationItem" id="nDB-N1-EHL"/>
                     <size key="freeformSize" width="390" height="1120"/>
                     <connections>
+                        <outlet property="costPerLaunchLabel" destination="sek-Vi-QdN" id="ptf-oq-7Bi"/>
+                        <outlet property="countryLaunchLabel" destination="eXw-Di-23i" id="KST-rD-jkF"/>
+                        <outlet property="firstLaunchDateLabel" destination="ja4-qb-4eR" id="IUw-sV-neZ"/>
                         <outlet property="mainScrollView" destination="QnA-NX-ubo" id="gHh-2x-FdS"/>
+                        <outlet property="nameRocketLabel" destination="Apn-bN-rQL" id="RDq-la-Nqm"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FZX-eL-vOw" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
