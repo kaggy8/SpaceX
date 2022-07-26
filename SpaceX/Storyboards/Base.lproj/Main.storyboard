@@ -406,6 +406,7 @@
                         <outlet property="costPerLaunchLabel" destination="sek-Vi-QdN" id="ptf-oq-7Bi"/>
                         <outlet property="countryLaunchLabel" destination="eXw-Di-23i" id="KST-rD-jkF"/>
                         <outlet property="firstLaunchDateLabel" destination="ja4-qb-4eR" id="IUw-sV-neZ"/>
+                        <outlet property="imageRocket" destination="0Hf-h2-eRP" id="tgJ-Cg-rbl"/>
                         <outlet property="mainScrollView" destination="QnA-NX-ubo" id="gHh-2x-FdS"/>
                         <outlet property="nameRocketLabel" destination="Apn-bN-rQL" id="RDq-la-Nqm"/>
                     </connections>
