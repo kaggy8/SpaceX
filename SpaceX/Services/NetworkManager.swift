@@ -8,7 +8,10 @@
 import Foundation
 
 class NetworkManager {
+    
+    static let shared = NetworkManager()
     private let urlSession = URLSession.shared
+    
     
     func getData(completion: @escaping ([Rocket]) -> Void) {
         guard let baseUrl = URL(string: "https://api.spacexdata.com/v4/rockets") else { return }
@@ -32,4 +35,6 @@ class NetworkManager {
         
         task.resume()
     }
+    
+    private init() {}
 }

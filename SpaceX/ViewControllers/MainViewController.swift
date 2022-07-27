@@ -15,24 +15,17 @@ class MainViewController: UIViewController {
     @IBOutlet weak var firstLaunchDateLabel: UILabel!
     @IBOutlet weak var countryLaunchLabel: UILabel!
     @IBOutlet weak var costPerLaunchLabel: UILabel!
+    @IBOutlet weak var firstStageEnginesCountLabel: UILabel!
+    @IBOutlet weak var firstStageFuelAmountLabel: UILabel!
+    @IBOutlet weak var firstStageBurnTimeLabel: UILabel!
+    @IBOutlet weak var secondStageInfoLabel: UILabel!
     
-    
-    
-    
-    private var networkManager = NetworkManager()
+    private var networkManager = NetworkManager.shared
     private var rockets = [Rocket]()
-    
-    override func loadView() {
-        super.loadView()
-        
-        
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         mainScrollView.contentInsetAdjustmentBehavior = .never
-        
         updateRocket()
     }
 }
@@ -60,27 +53,38 @@ extension MainViewController {
         dateF.dateFormat = "dd MMMM, yyyy"
         let finishedDate = dateF.string(from: date)
         
-        let locale = Locale(identifier: "en_US")
-        let countryCode = locale.countryCode(by: rockets[1].country)
-        print(countryCode as Any)
-        let multiLocale = Locale(identifier: countryCode ?? " ")
-        let nameCountry = multiLocale.localizedString(forRegionCode: countryCode ?? " ")
-        let ss = NSLocale.current.localizedString(forRegionCode: countryCode ?? " ")
-        print(nameCountry as Any)
-        print(Locale.isoRegionCodes)
+        let country = getCountry()
         
         nameRocketLabel.text = rockets.first!.name
         firstLaunchDateLabel.text = finishedDate
-        countryLaunchLabel.text = rockets.first!.country
+        countryLaunchLabel.text = country
         costPerLaunchLabel.text = costPerLaunch
+        firstStageEnginesCountLabel.text = String(rockets.first!.firstStage.engines)
+        firstStageBurnTimeLabel.text = String(rockets.first!.firstStage.burnTimeSec!)
+        firstStageFuelAmountLabel.text = String(rockets.first!.firstStage.fuelAmountTons)
+        secondStageInfoLabel.text = "\(rockets.first!.secondStage.engines) \n \(rockets.first!.secondStage.burnTimeSec!) \n \(rockets.first!.secondStage.fuelAmountTons)"
+        secondStageInfoLabel.textColor = .white
     }
     
     private func getImage() {
         guard let urlString = rockets[0].flickrImages.randomElement() else { return }
-        let url = URL(string: urlString)
-        let data = try? Data(contentsOf: url!)
-        imageRocket.image = UIImage(data: data!)
+        guard let url = URL(string: urlString) else { return }
+        guard let data = try? Data(contentsOf: url) else { return }
+        imageRocket.image = UIImage(data: data)
         imageRocket.contentMode = .scaleAspectFill
+    }
+    
+    private func getCountry() -> String {
+        let country = rockets[0].country
+        
+        switch country {
+        case "Republic of the Marshall Islands":
+            return "Маршалловы острова"
+        case "United States":
+            return "США"
+        default:
+            return "Нет данных"
+        }
     }
 }
 
