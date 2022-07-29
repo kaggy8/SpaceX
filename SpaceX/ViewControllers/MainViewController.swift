@@ -19,40 +19,47 @@ class MainViewController: UIViewController {
     @IBOutlet weak var firstStageFuelAmountLabel: UILabel!
     @IBOutlet weak var firstStageBurnTimeLabel: UILabel!
     @IBOutlet weak var secondStageInfoLabel: UILabel!
+    @IBOutlet weak var heightRocketLabel: UILabel!
+    @IBOutlet weak var diameterRocketLabel: UILabel!
+    @IBOutlet weak var massRocketLabel: UILabel!
+    @IBOutlet weak var payloadsWeightLabel: UILabel!
     
     private var networkManager = NetworkManager.shared
     private var rockets = [Rocket]()
     
+    override var prefersStatusBarHidden: Bool {
+        true
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         mainScrollView.contentInsetAdjustmentBehavior = .never
-        updateRocket()
+        setupLoader()
     }
 }
 
 extension MainViewController {
     
     // MARK: - Private methods
-    private func updateRocket() {
-        networkManager.getData { result in
-            self.rockets = result
-            self.setUI()
-            self.getImage()
+    private func setupLoader() {
+        self.networkManager.getData { (model) in
+            switch model {
+            case .success(let rockets):
+                DispatchQueue.main.async {
+                    self.rockets = rockets
+                    self.setUI()
+                    self.getImage()
+                }
+            case .failure( _):
+                break
+            }
         }
     }
     
     private func setUI() {
         let costPerLaunch = "$\(rockets.first!.costPerLaunch / 100000) млн"
-        
-        let receivedDate = rockets.first!.firstFlight
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy/MM/dd"
-        guard let date = dateFormatter.date(from: receivedDate) else { return }
-        let dateF = DateFormatter()
-        dateF.timeStyle = .none
-        dateF.dateFormat = "dd MMMM, yyyy"
-        let finishedDate = dateF.string(from: date)
-        
+        let finishedDate = getDate()
         let country = getCountry()
         
         nameRocketLabel.text = rockets.first!.name
@@ -64,14 +71,23 @@ extension MainViewController {
         firstStageFuelAmountLabel.text = String(rockets.first!.firstStage.fuelAmountTons)
         secondStageInfoLabel.text = "\(rockets.first!.secondStage.engines) \n \(rockets.first!.secondStage.burnTimeSec!) \n \(rockets.first!.secondStage.fuelAmountTons)"
         secondStageInfoLabel.textColor = .white
+        heightRocketLabel.text = "\(rockets.first!.height.meters) \n Высота, m"
+        diameterRocketLabel.text = "\(rockets.first!.diameter.meters) \n Диаметр, m"
+        massRocketLabel.text = "\(rockets.first!.mass.kg) \n Масса, kg"
+        payloadsWeightLabel.text = "\(rockets.first!.payloadWeights.first!.kg) \n Нагрузка, kg"
     }
     
     private func getImage() {
-        guard let urlString = rockets[0].flickrImages.randomElement() else { return }
-        guard let url = URL(string: urlString) else { return }
-        guard let data = try? Data(contentsOf: url) else { return }
-        imageRocket.image = UIImage(data: data)
-        imageRocket.contentMode = .scaleAspectFill
+        DispatchQueue.global().async {
+            guard let urlString = self.rockets[0].flickrImages.randomElement() else { return }
+            guard let url = URL(string: urlString) else { return }
+            guard let data = try? Data(contentsOf: url) else { return }
+            
+            DispatchQueue.main.async {
+                self.imageRocket.image = UIImage(data: data)
+                self.imageRocket.contentMode = .scaleAspectFill
+            }
+        }
     }
     
     private func getCountry() -> String {
@@ -86,15 +102,15 @@ extension MainViewController {
             return "Нет данных"
         }
     }
-}
-
-extension Locale {
-    func countryCode(by countryName: String) -> String? {
-        return Locale.isoRegionCodes.first(where: { code -> Bool in
-            guard let localizedCountryName = localizedString(forRegionCode: code) else {
-                return false
-            }
-            return localizedCountryName.lowercased() == countryName.lowercased()
-        })
+    
+    private func getDate() -> String {
+        let receivedDate = rockets.first!.firstFlight
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy/MM/dd"
+        guard let date = dateFormatter.date(from: receivedDate) else { return "Нет данныx"}
+        let dateF = DateFormatter()
+        dateF.timeStyle = .none
+        dateF.dateFormat = "dd MMMM, yyyy"
+        return dateF.string(from: date)
     }
 }

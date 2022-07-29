@@ -8,31 +8,40 @@
 import Foundation
 
 class NetworkManager {
+    enum RocketsError: Error {
+        case parseError
+        case requestError(Error)
+    }
     
     static let shared = NetworkManager()
-    private let urlSession = URLSession.shared
     
-    
-    func getData(completion: @escaping ([Rocket]) -> Void) {
-        guard let baseUrl = URL(string: "https://api.spacexdata.com/v4/rockets") else { return }
+    func getData(completion: @escaping ((Result<[Rocket], RocketsError>) -> Void)) {
+        let configuration = URLSessionConfiguration.default
+        let session = URLSession(configuration: configuration)
+        var urlComponents = URLComponents()
+        urlComponents.scheme = "https"
+        urlComponents.host = "api.spacexdata.com"
+        urlComponents.path = "/v4/rockets"
         
-        let task = urlSession.dataTask(with: baseUrl) { data, _, error in
-            guard let data = data else {
-                print(error?.localizedDescription ?? "No error description")
-                return
+        
+        guard let url = urlComponents.url else { return }
+        let request = URLRequest(url: url)
+        let task = session.dataTask(with: request) { data, _, error in
+            if let error = error {
+                print(error)
+                return completion(.failure(.requestError(error)))
             }
+            guard let data = data else { return }
+            let rockets = JSONDecoder()
             
             do {
-                let result = try JSONDecoder().decode([Rocket].self, from: data)
-                
-                DispatchQueue.main.async {
-                    completion(result)
-                }
-            } catch let error {
-                print(error.localizedDescription)
+                let result = try rockets.decode([Rocket].self, from: data)
+                print(result)
+                return completion(.success(result))
+            } catch {
+                return completion(.failure(.parseError))
             }
         }
-        
         task.resume()
     }
     

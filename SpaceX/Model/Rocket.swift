@@ -16,6 +16,7 @@ struct Rocket: Decodable {
     let costPerLaunch: Int
     let firstStage: FirstStage
     let secondStage: SecondStage
+    let payloadWeights: [PayloadWeights]
     
     enum CodingKeys: String, CodingKey {
         case height
@@ -28,6 +29,7 @@ struct Rocket: Decodable {
         case costPerLaunch = "cost_per_launch"
         case firstStage = "first_stage"
         case secondStage = "second_stage"
+        case payloadWeights = "payload_weights"
     }
 }
 
@@ -68,4 +70,9 @@ struct SecondStage: Decodable {
         case fuelAmountTons = "fuel_amount_tons"
         case burnTimeSec = "burn_time_sec"
     }
+}
+
+struct PayloadWeights: Decodable {
+    let kg: Int
+    let lb: Int
 }
