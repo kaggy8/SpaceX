@@ -43,21 +43,28 @@ extension MainViewController {
     
     // MARK: - Private methods
     private func setupLoader() {
-        self.networkManager.getData { (model) in
+        self.networkManager.fetchData(dataType: [Rocket].self, from: Links.rockets.rawValue, with: { (model) in
             switch model {
             case .success(let rockets):
                 DispatchQueue.main.async {
                     self.rockets = rockets
                     self.setUI()
-                    self.getImage()
                 }
-            case .failure( _):
-                break
+            case .failure(let error):
+                print(error)
             }
-        }
+        })
     }
     
     private func setUI() {
+        DispatchQueue.global().async {
+            guard let imageData = self.networkManager.fetchImage(from: self.rockets[0].flickrImages.randomElement()) else { return }
+            DispatchQueue.main.async {
+                self.imageRocket.image = UIImage(data: imageData)
+                self.imageRocket.contentMode = .scaleAspectFill
+            }
+        }
+        
         let costPerLaunch = "$\(rockets.first!.costPerLaunch / 100000) млн"
         let finishedDate = getDate()
         let country = getCountry()
@@ -75,19 +82,6 @@ extension MainViewController {
         diameterRocketLabel.text = "\(rockets.first!.diameter.meters) \n Диаметр, m"
         massRocketLabel.text = "\(rockets.first!.mass.kg) \n Масса, kg"
         payloadsWeightLabel.text = "\(rockets.first!.payloadWeights.first!.kg) \n Нагрузка, kg"
-    }
-    
-    private func getImage() {
-        DispatchQueue.global().async {
-            guard let urlString = self.rockets[0].flickrImages.randomElement() else { return }
-            guard let url = URL(string: urlString) else { return }
-            guard let data = try? Data(contentsOf: url) else { return }
-            
-            DispatchQueue.main.async {
-                self.imageRocket.image = UIImage(data: data)
-                self.imageRocket.contentMode = .scaleAspectFill
-            }
-        }
     }
     
     private func getCountry() -> String {

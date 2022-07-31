@@ -9,40 +9,40 @@ import Foundation
 
 class NetworkManager {
     enum RocketsError: Error {
-        case parseError
-        case requestError(Error)
+        case invalidURL
+        case noData
+        case decodingError
     }
     
     static let shared = NetworkManager()
     
-    func getData(completion: @escaping ((Result<[Rocket], RocketsError>) -> Void)) {
-        let configuration = URLSessionConfiguration.default
-        let session = URLSession(configuration: configuration)
-        var urlComponents = URLComponents()
-        urlComponents.scheme = "https"
-        urlComponents.host = "api.spacexdata.com"
-        urlComponents.path = "/v4/rockets"
+    func fetchData<T: Decodable>(dataType: T.Type ,from url: String, with completion: @escaping ((Result<T, RocketsError>) -> Void)) {
+        guard let url = URL(string: url) else {
+            completion(.failure(.invalidURL))
+            return
+        }
         
-        
-        guard let url = urlComponents.url else { return }
-        let request = URLRequest(url: url)
-        let task = session.dataTask(with: request) { data, _, error in
-            if let error = error {
-                print(error)
-                return completion(.failure(.requestError(error)))
+        URLSession.shared.dataTask(with: url) { data, _, error in
+            guard let data = data else {
+                completion(.failure(.noData))
+                print(error?.localizedDescription ?? "No description")
+                return
             }
-            guard let data = data else { return }
-            let rockets = JSONDecoder()
             
             do {
-                let result = try rockets.decode([Rocket].self, from: data)
-                print(result)
-                return completion(.success(result))
+                let type = try JSONDecoder().decode(T.self, from: data)
+                DispatchQueue.main.async {
+                    completion(.success(type))
+                }
             } catch {
-                return completion(.failure(.parseError))
+                completion(.failure(.decodingError))
             }
-        }
-        task.resume()
+        }.resume()
+    }
+    
+    func fetchImage(from url: String?) -> Data? {
+        guard let url = URL(string: url ?? " ") else { return nil}
+        return try? Data(contentsOf: url)
     }
     
     private init() {}

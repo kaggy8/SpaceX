@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		5427FD76288B460300FB4650 /* Rocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5427FD75288B460300FB4650 /* Rocket.swift */; };
+		5430A49028972111009C0E0C /* Links.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5430A48F28972111009C0E0C /* Links.swift */; };
 		54C650F22885E892009BBB0A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54C650F12885E892009BBB0A /* AppDelegate.swift */; };
 		54C650F42885E892009BBB0A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54C650F32885E892009BBB0A /* SceneDelegate.swift */; };
 		54C650F92885E892009BBB0A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 54C650F72885E892009BBB0A /* Main.storyboard */; };
@@ -19,6 +20,7 @@
 
 /* Begin PBXFileReference section */
 		5427FD75288B460300FB4650 /* Rocket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rocket.swift; sourceTree = "<group>"; };
+		5430A48F28972111009C0E0C /* Links.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Links.swift; sourceTree = "<group>"; };
 		54C650EE2885E891009BBB0A /* SpaceX.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpaceX.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		54C650F12885E892009BBB0A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		54C650F32885E892009BBB0A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -41,6 +43,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5430A48E289720F9009C0E0C /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				5430A48F28972111009C0E0C /* Links.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
 		54B0CEE2288899F500322202 /* Services */ = {
 			isa = PBXGroup;
 			children = (
@@ -73,6 +83,7 @@
 				54C651092885E90D009BBB0A /* Model */,
 				54C651052885E8A0009BBB0A /* Storyboards */,
 				54C651072885E8B6009BBB0A /* App */,
+				5430A48E289720F9009C0E0C /* Helpers */,
 				54C651062885E8AA009BBB0A /* Resources */,
 			);
 			path = SpaceX;
@@ -193,6 +204,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				54C651122885F363009BBB0A /* MainViewController.swift in Sources */,
+				5430A49028972111009C0E0C /* Links.swift in Sources */,
 				54C650F22885E892009BBB0A /* AppDelegate.swift in Sources */,
 				54C8DEEB288C741E00835E57 /* NetworkManager.swift in Sources */,
 				54C650F42885E892009BBB0A /* SceneDelegate.swift in Sources */,
